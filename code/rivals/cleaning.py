@@ -35,8 +35,8 @@ def clean_price(text: str) -> float:
     - Remove the dollar sign and any commas with `.replace()`.
     - `.strip()` the spaces, then convert with `float()`.
     """
-    # TODO: your code here
-    pass
+    cleaned = text.replace("$", "").replace(",", "")
+    return float(cleaned.strip())
 
 
 def clean_card_lines(text: str) -> list[str]:
@@ -55,8 +55,17 @@ def clean_card_lines(text: str) -> list[str]:
     - Skip it if every word in it is in NOISE: `all(w in NOISE for w in line.split())`.
     - Otherwise append it to a list, and return the list.
     """
-    # TODO: your code here
-    pass
+    cleaned_list = []
+    cleaned = text.split("\n")
+    for line in cleaned:
+        line = line.strip()
+        if not line:
+            continue
+        if all(w in NOISE for w in line.split()):
+            continue
+        cleaned_list.append(line)
+    return cleaned_list
+
 
 
 def parse_price_line(line: str) -> list[tuple[str, float]]:
@@ -79,8 +88,13 @@ def parse_price_line(line: str) -> list[tuple[str, float]]:
     - Loop over the matches. Use "Each" when size is "", and `clean_price()` on the
       price. Return the list of pairs.
     """
-    # TODO: your code here
-    pass
+    price_line = []
+    for size, price in re.findall(r"([SML])?\s*(\$[\d.,]+)", line):
+        if size == "":
+            size = "Each"
+        price_line.append((size, clean_price(price)))
+    return price_line
+
 
 
 def card_rows(cafe: str, category: str, card_text: str) -> list[dict]:
@@ -100,5 +114,16 @@ def card_rows(cafe: str, category: str, card_text: str) -> list[dict]:
     - `parse_price_line()` the price line, and build one dict per (size, price)
       pair with the five keys above. Return the list.
     """
-    # TODO: your code here
-    pass
+    lines = clean_card_lines(card_text)
+    item = lines[0]
+    price_line = next(line for line in lines if "$" in line)
+    rows = []
+    for size, price in parse_price_line(price_line):
+        rows.append({
+            "cafe": cafe,
+            "category": category,
+            "item": item,
+            "size": size,
+            "price": price,
+        })
+    return rows
