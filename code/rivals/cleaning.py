@@ -67,7 +67,6 @@ def clean_card_lines(text: str) -> list[str]:
     return cleaned_list
 
 
-
 def parse_price_line(line: str) -> list[tuple[str, float]]:
     """Every (size, price) pair on a price line.
 
@@ -94,7 +93,6 @@ def parse_price_line(line: str) -> list[tuple[str, float]]:
             size = "Each"
         price_line.append((size, clean_price(price)))
     return price_line
-
 
 
 def card_rows(cafe: str, category: str, card_text: str) -> list[dict]:
