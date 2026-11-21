@@ -1,8 +1,4 @@
-Write your reflection here.
-
-See reflection.md for what makes a good reflection — be specific, use the
-terminology from this assignment (HTML element, CSS selector, class and id
-selectors, sibling selector, inner_text, attribute, headless browser, waiting for
-JavaScript, crawling, pagination, read_html, melt, fuzzy matching, normalization,
-threshold, human in the loop, merge indicator, gap analysis), and make it
-actionable.
+From this assignment compared to the last, I can definitely say that I've improved on my 
+ability to create apps using streamlit. My biggest struggle was with the scrape_canal function,
+as I am not entirely familiar with the use of playwright yet. I have to brush up on playwright commands 
+on their documentation, which I luckily will be doing anyway as I work on my final project.
