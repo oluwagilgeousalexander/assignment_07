@@ -124,4 +124,3 @@ with gaps_tab:
     st.dataframe(gaps[gaps["where"] == "only them"], hide_index=True)
     st.subheader("Only us: what sets us apart")
     st.dataframe(gaps[gaps["where"] == "only us"], hide_index=True)
-    
