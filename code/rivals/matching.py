@@ -52,9 +52,11 @@ def normalize_name(name: str) -> str:
     - Split into words, drop the ones in settings.FILLER_WORDS, and join the rest
       with single spaces.
     """
-    # TODO: your code here
-    pass
-
+    text = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode()
+    text = text.lower()
+    re.sub(r"[^a-z0-9]+", " ", text)
+    words = [w for w in text.split() if w not in FILLER_WORDS]
+    return " ".join(words)
 
 def top_candidates(name: str, choices: list[str], limit: int = 3) -> list[tuple]:
     """The `limit` choices most like `name`, best first, as (choice, score) pairs.
@@ -75,8 +77,13 @@ def top_candidates(name: str, choices: list[str], limit: int = 3) -> list[tuple]
       tuples, best first. The index says which original choice it was.
     - Return `(choices[index], round(score))` for each.
     """
-    # TODO: your code here
-    pass
+    if not choices:
+        return []
+    normalized = [normalize_name(c) for c in choices]
+    found = process.extract(normalize_name(name), normalized,
+                            scorer=fuzz.token_sort_ratio, limit=limit)
+    return [(choices[index], round(score)) for _, score, index in found]
+
 
 
 def match_band(score: float) -> str:
